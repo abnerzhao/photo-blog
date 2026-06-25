@@ -44,8 +44,12 @@
       max-width: 100%;
     }
 
+    figure {
+      margin: 0;
+    }
+
     .page {
-      width: min(100%, 780px);
+      width: min(100%, 820px);
       margin: 0 auto;
       padding: 32px 20px 64px;
     }
@@ -71,15 +75,42 @@
       line-height: 1.4;
     }
 
+    .overview {
+      display: grid;
+      grid-template-columns: repeat(6, 1fr);
+      gap: 6px;
+      padding: 22px 0 28px;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .overview a {
+      display: block;
+      overflow: hidden;
+      border-radius: 3px;
+      background: #e5e4df;
+      aspect-ratio: 1;
+    }
+
+    .overview img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: opacity 140ms ease;
+    }
+
+    .overview a:hover img {
+      opacity: 0.78;
+    }
+
     .feed {
       display: grid;
-      gap: 44px;
+      gap: 50px;
       padding-top: 28px;
     }
 
     .post {
       display: grid;
-      grid-template-columns: 86px minmax(0, 1fr);
+      grid-template-columns: 92px minmax(0, 1fr);
       gap: 22px;
       align-items: start;
     }
@@ -94,12 +125,18 @@
     }
 
     .entry {
+      display: grid;
+      gap: 24px;
       min-width: 0;
       border-bottom: 1px solid var(--line);
       padding-bottom: 38px;
     }
 
-    .entry img {
+    .photo {
+      min-width: 0;
+    }
+
+    .photo img {
       width: 100%;
       max-height: 780px;
       border-radius: 4px;
@@ -107,7 +144,7 @@
       object-fit: cover;
     }
 
-    .entry h2 {
+    .photo h2 {
       margin: 14px 0 0;
       font-size: 18px;
       font-weight: 680;
@@ -147,6 +184,13 @@
         padding-bottom: 16px;
       }
 
+      .overview {
+        grid-template-columns: repeat(3, 1fr);
+        gap: 5px;
+        padding-top: 18px;
+        padding-bottom: 22px;
+      }
+
       .post {
         grid-template-columns: 1fr;
         gap: 8px;
@@ -160,7 +204,7 @@
         padding-bottom: 34px;
       }
 
-      .entry img {
+      .photo img {
         max-height: none;
       }
     }
@@ -173,87 +217,147 @@
       <div class="site-meta">RECENT PHOTOS</div>
     </header>
 
+    <section class="overview" id="overview" aria-label="照片总览"></section>
     <section class="feed" id="feed" aria-label="照片时间线"></section>
 
     <footer class="foot">Photo Notes</footer>
   </main>
 
   <script>
-    const photos = [
+    const entries = [
       {
-        title: '巷口的雨停了',
         date: '2026.06.12',
-        tagLabel: '街头',
         location: '上海 · 武康路',
-        camera: 'Fujifilm X100VI',
-        src: 'https://picsum.photos/seed/photo-stream-after-rain-street/1400/1050',
-        alt: '雨后街道路面反光与行人'
+        photos: [
+          {
+            title: '巷口的雨停了',
+            camera: 'Fujifilm X100VI',
+            src: 'https://picsum.photos/seed/photo-stream-after-rain-street/1400/1050',
+            alt: '雨后街道路面反光与行人'
+          },
+          {
+            title: '路灯下的水痕',
+            camera: 'Fujifilm X100VI',
+            src: 'https://picsum.photos/seed/photo-stream-rain-reflection-lamp/1400/1050',
+            alt: '路灯下湿润路面的反光'
+          }
+        ]
       },
       {
-        title: '山腰的风',
         date: '2026.05.30',
-        tagLabel: '自然',
         location: '浙江 · 莫干山',
-        camera: 'Sony A7C II',
-        src: 'https://picsum.photos/seed/photo-stream-mountain-wind/1400/1100',
-        alt: '山坡树木与低云'
+        photos: [
+          {
+            title: '山腰的风',
+            camera: 'Sony A7C II',
+            src: 'https://picsum.photos/seed/photo-stream-mountain-wind/1400/1100',
+            alt: '山坡树木与低云'
+          }
+        ]
       },
       {
-        title: '夜车窗口',
         date: '2026.05.18',
-        tagLabel: '夜晚',
         location: '杭州 · 东站',
-        camera: 'Ricoh GR IIIx',
-        src: 'https://picsum.photos/seed/photo-stream-night-train-window/1400/1000',
-        alt: '夜晚列车窗口与站台灯光倒影'
+        photos: [
+          {
+            title: '夜车窗口',
+            camera: 'Ricoh GR IIIx',
+            src: 'https://picsum.photos/seed/photo-stream-night-train-window/1400/1000',
+            alt: '夜晚列车窗口与站台灯光倒影'
+          },
+          {
+            title: '站台另一侧',
+            camera: 'Ricoh GR IIIx',
+            src: 'https://picsum.photos/seed/photo-stream-platform-other-side/1400/1000',
+            alt: '夜晚站台另一侧的灯光'
+          },
+          {
+            title: '玻璃里的候车室',
+            camera: 'Ricoh GR IIIx',
+            src: 'https://picsum.photos/seed/photo-stream-waiting-room-glass/1400/1000',
+            alt: '候车室玻璃反射'
+          }
+        ]
       },
       {
-        title: '海边白墙',
         date: '2026.04.27',
-        tagLabel: '旅行',
         location: '福建 · 平潭',
-        camera: 'Nikon Zf',
-        src: 'https://picsum.photos/seed/photo-stream-white-wall-sea/1400/1100',
-        alt: '海边白墙与清晰阴影'
+        photos: [
+          {
+            title: '海边白墙',
+            camera: 'Nikon Zf',
+            src: 'https://picsum.photos/seed/photo-stream-white-wall-sea/1400/1100',
+            alt: '海边白墙与清晰阴影'
+          }
+        ]
       },
       {
-        title: '便利店门口',
         date: '2026.04.03',
-        tagLabel: '街头',
         location: '上海 · 长乐路',
-        camera: 'Leica Q3',
-        src: 'https://picsum.photos/seed/photo-stream-convenience-store/1400/1000',
-        alt: '夜晚便利店门口与行人'
+        photos: [
+          {
+            title: '便利店门口',
+            camera: 'Leica Q3',
+            src: 'https://picsum.photos/seed/photo-stream-convenience-store/1400/1000',
+            alt: '夜晚便利店门口与行人'
+          }
+        ]
       },
       {
-        title: '湖面没有风',
         date: '2026.03.21',
-        tagLabel: '自然',
         location: '江苏 · 苏州',
-        camera: 'Canon R6 II',
-        src: 'https://picsum.photos/seed/photo-stream-still-lake/1400/1050',
-        alt: '平静湖面与远处树影'
+        photos: [
+          {
+            title: '湖面没有风',
+            camera: 'Canon R6 II',
+            src: 'https://picsum.photos/seed/photo-stream-still-lake/1400/1050',
+            alt: '平静湖面与远处树影'
+          }
+        ]
       }
     ];
 
+    const overview = document.querySelector('#overview');
     const feed = document.querySelector('#feed');
 
+    function allPhotos() {
+      return entries.flatMap((entry, entryIndex) => entry.photos.map((photo, photoIndex) => ({
+        ...photo,
+        id: `photo-${entryIndex}-${photoIndex}`
+      })));
+    }
+
+    function renderOverview() {
+      overview.innerHTML = allPhotos().map((photo) => `
+        <a href="#${photo.id}" aria-label="跳转到 ${photo.title}">
+          <img src="${photo.src}" alt="${photo.alt}" loading="eager">
+        </a>
+      `).join('');
+    }
+
     function render() {
-      feed.innerHTML = photos.map((photo, index) => `
+      feed.innerHTML = entries.map((entry, entryIndex) => `
         <article class="post">
-          <time class="date" datetime="${photo.date.replaceAll('.', '-')}">${photo.date}<br>${photo.tagLabel}</time>
+          <time class="date" datetime="${entry.date.replaceAll('.', '-')}">${entry.date}<br>${entry.photos.length} photos</time>
           <div class="entry">
-            <img src="${photo.src}" alt="${photo.alt}" loading="${index < 2 ? 'eager' : 'lazy'}">
-            <h2>${photo.title}</h2>
-            <div class="meta" aria-label="拍摄信息">
-              <span>${photo.location}</span>
-              <span>${photo.camera}</span>
-            </div>
+            ${entry.photos.map((photo, photoIndex) => `
+              <figure class="photo" id="photo-${entryIndex}-${photoIndex}">
+                <img src="${photo.src}" alt="${photo.alt}" loading="${entryIndex < 1 ? 'eager' : 'lazy'}">
+                <figcaption>
+                  <h2>${photo.title}</h2>
+                  <div class="meta" aria-label="拍摄信息">
+                    <span>${entry.location}</span>
+                    <span>${photo.camera}</span>
+                  </div>
+                </figcaption>
+              </figure>
+            `).join('')}
           </div>
         </article>
       `).join('');
     }
 
+    renderOverview();
     render();
   </script>
 </body>
