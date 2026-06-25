@@ -1,0 +1,479 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#f7f7f4">
+  <title>Photos by Abner Zhao · Timeline</title>
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    :root {
+      --bg: #f7f7f4;
+      --ink: #171717;
+      --muted: #6f6f6a;
+      --faint: #a8a8a1;
+      --line: #dfded8;
+      --overlay: rgba(17, 17, 17, 0.86);
+      --mono: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, monospace;
+      --sans: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "PingFang SC", "Microsoft YaHei", sans-serif;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--ink);
+      font-family: var(--sans);
+      letter-spacing: 0;
+    }
+
+    body.is-locked {
+      overflow: hidden;
+    }
+
+    button {
+      border: 0;
+      font: inherit;
+      cursor: pointer;
+    }
+
+    img {
+      display: block;
+      max-width: 100%;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    figure {
+      margin: 0;
+    }
+
+    .page {
+      width: min(100%, 820px);
+      margin: 0 auto;
+      padding: 32px 20px 64px;
+    }
+
+    .site-head {
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      gap: 18px;
+      border-bottom: 1px solid var(--line);
+      padding-bottom: 18px;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: 22px;
+      font-weight: 720;
+      line-height: 1.15;
+      letter-spacing: 0;
+    }
+
+    .site-meta,
+    .nav-link,
+    .foot {
+      color: var(--faint);
+      font-family: var(--mono);
+      font-size: 12px;
+      line-height: 1.4;
+    }
+
+    .site-meta {
+      margin-top: 6px;
+    }
+
+    .nav-link:hover {
+      color: var(--ink);
+    }
+
+    .feed {
+      display: grid;
+      gap: 50px;
+      padding-top: 28px;
+    }
+
+    .post {
+      display: grid;
+      grid-template-columns: 92px minmax(0, 1fr);
+      gap: 22px;
+      align-items: start;
+    }
+
+    .date {
+      position: sticky;
+      top: 24px;
+      color: var(--faint);
+      font-family: var(--mono);
+      font-size: 12px;
+      line-height: 1.45;
+    }
+
+    .entry {
+      min-width: 0;
+      border-bottom: 1px solid var(--line);
+      padding-bottom: 38px;
+    }
+
+    .entry h2 {
+      margin: 0;
+      font-size: 18px;
+      font-weight: 680;
+      line-height: 1.28;
+      letter-spacing: 0;
+    }
+
+    .entry-note {
+      max-width: 620px;
+      margin-top: 8px;
+      margin-bottom: 18px;
+      color: var(--muted);
+      font-size: 14px;
+      line-height: 1.72;
+    }
+
+    .photos {
+      display: grid;
+      gap: 8px;
+    }
+
+    .photos[data-count="1"] {
+      grid-template-columns: 1fr;
+    }
+
+    .photos[data-count="2"] {
+      grid-template-columns: repeat(2, 1fr);
+    }
+
+    .photos[data-count="3"],
+    .photos[data-count="4"],
+    .photos[data-count="5"],
+    .photos[data-count="6"] {
+      grid-template-columns: repeat(3, 1fr);
+    }
+
+    .photo {
+      min-width: 0;
+    }
+
+    .photo-button {
+      display: block;
+      width: 100%;
+      overflow: hidden;
+      border-radius: 4px;
+      background: #e5e4df;
+      padding: 0;
+      text-align: left;
+      aspect-ratio: 4 / 3;
+    }
+
+    .photos[data-count="1"] .photo-button {
+      aspect-ratio: auto;
+    }
+
+    .photo-button img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: opacity 140ms ease;
+    }
+
+    .photos[data-count="1"] .photo-button img {
+      height: auto;
+      max-height: 780px;
+    }
+
+    .photo-button:hover img {
+      opacity: 0.82;
+    }
+
+    .meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px 10px;
+      margin-top: 7px;
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.55;
+    }
+
+    .meta span + span::before {
+      content: "/";
+      margin-right: 10px;
+      color: var(--faint);
+    }
+
+    .foot {
+      padding-top: 12px;
+    }
+
+    .lightbox {
+      position: fixed;
+      inset: 0;
+      z-index: 50;
+      display: none;
+      grid-template-rows: 1fr auto;
+      gap: 14px;
+      padding: clamp(14px, 3vw, 34px);
+      background: var(--overlay);
+    }
+
+    .lightbox.is-open {
+      display: grid;
+    }
+
+    .lightbox-stage {
+      position: relative;
+      display: grid;
+      place-items: center;
+      min-height: 0;
+    }
+
+    .lightbox-image {
+      max-width: 100%;
+      max-height: calc(100dvh - 120px);
+      border-radius: 4px;
+      object-fit: contain;
+      background: #101010;
+    }
+
+    .lightbox-meta {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 14px;
+      color: rgba(255, 255, 255, 0.72);
+      font-family: var(--mono);
+      font-size: 12px;
+      line-height: 1.45;
+    }
+
+    .lightbox-meta strong {
+      color: #fff;
+      font-weight: 700;
+    }
+
+    .lightbox-button,
+    .close-button {
+      display: grid;
+      place-items: center;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.9);
+      color: #111;
+      font-family: var(--mono);
+      font-weight: 700;
+    }
+
+    .close-button {
+      position: fixed;
+      top: 14px;
+      right: 14px;
+      width: 38px;
+      height: 38px;
+      font-size: 20px;
+    }
+
+    .lightbox-button {
+      position: absolute;
+      top: 50%;
+      width: 42px;
+      height: 42px;
+      transform: translateY(-50%);
+      font-size: 18px;
+    }
+
+    .lightbox-button.prev {
+      left: 0;
+    }
+
+    .lightbox-button.next {
+      right: 0;
+    }
+
+    @media (max-width: 680px) {
+      .page {
+        padding: 26px 16px 48px;
+      }
+
+      .site-head {
+        align-items: flex-start;
+        flex-direction: column;
+        gap: 12px;
+        padding-bottom: 16px;
+      }
+
+      .post {
+        grid-template-columns: 1fr;
+        gap: 8px;
+      }
+
+      .date {
+        position: static;
+      }
+
+      .entry {
+        padding-bottom: 34px;
+      }
+
+      .photos {
+        gap: 6px;
+      }
+
+      .photos[data-count="3"],
+      .photos[data-count="4"],
+      .photos[data-count="5"],
+      .photos[data-count="6"] {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .photos[data-count="1"] .photo-button img {
+        max-height: none;
+      }
+
+      .lightbox {
+        padding: 12px;
+      }
+
+      .lightbox-button {
+        width: 36px;
+        height: 36px;
+      }
+
+      .lightbox-meta {
+        align-items: flex-start;
+        flex-direction: column;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main class="page">
+    <header class="site-head">
+      <div>
+        <h1>Photos by Abner Zhao</h1>
+        <div class="site-meta">TIMELINE</div>
+      </div>
+      <a class="nav-link" href="index.html">OVERVIEW</a>
+    </header>
+
+    <section class="feed" id="feed" aria-label="照片时间线"></section>
+
+    <footer class="foot">Photos by Abner Zhao</footer>
+  </main>
+
+  <div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="照片预览">
+    <button class="close-button" id="closeLightbox" type="button" aria-label="关闭预览">×</button>
+    <div class="lightbox-stage">
+      <button class="lightbox-button prev" id="prevPhoto" type="button" aria-label="上一张">‹</button>
+      <img class="lightbox-image" id="lightboxImage" src="" alt="">
+      <button class="lightbox-button next" id="nextPhoto" type="button" aria-label="下一张">›</button>
+    </div>
+    <div class="lightbox-meta">
+      <strong id="lightboxTitle"></strong>
+      <span id="lightboxCounter"></span>
+    </div>
+  </div>
+
+  <script src="data.js"></script>
+  <script>
+    const feed = document.querySelector('#feed');
+    const lightbox = document.querySelector('#lightbox');
+    const lightboxImage = document.querySelector('#lightboxImage');
+    const lightboxTitle = document.querySelector('#lightboxTitle');
+    const lightboxCounter = document.querySelector('#lightboxCounter');
+    const closeLightbox = document.querySelector('#closeLightbox');
+    const prevPhoto = document.querySelector('#prevPhoto');
+    const nextPhoto = document.querySelector('#nextPhoto');
+    let activeIndex = 0;
+
+    function flatPhotos() {
+      return window.photoEntries.flatMap((entry, entryIndex) => entry.photos.map((photo, photoIndex) => ({
+        ...photo,
+        entryIndex,
+        photoIndex,
+        title: entry.title,
+        date: entry.date,
+        location: entry.location,
+        camera: entry.camera
+      })));
+    }
+
+    const photos = flatPhotos();
+
+    feed.innerHTML = window.photoEntries.map((entry, entryIndex) => `
+      <article class="post">
+        <time class="date" datetime="${entry.date.replaceAll('.', '-')}">${entry.date}<br>${entry.photos.length} photos</time>
+        <div class="entry">
+          <h2>${entry.title}</h2>
+          <div class="meta" aria-label="拍摄信息">
+            <span>${entry.location}</span>
+            <span>${entry.camera}</span>
+          </div>
+          <div class="entry-note">${entry.description}</div>
+          <div class="photos" data-count="${entry.photos.length}">
+            ${entry.photos.map((photo, photoIndex) => `
+              <figure class="photo" id="photo-${entryIndex}-${photoIndex}">
+                <button class="photo-button" type="button" data-index="${photos.findIndex((item) => item.entryIndex === entryIndex && item.photoIndex === photoIndex)}" aria-label="查看 ${entry.title}">
+                  <img src="${photo.src}" alt="${photo.alt}" loading="${entryIndex < 1 ? 'eager' : 'lazy'}">
+                </button>
+              </figure>
+            `).join('')}
+          </div>
+        </div>
+      </article>
+    `).join('');
+
+    function showPhoto(index) {
+      activeIndex = (index + photos.length) % photos.length;
+      const photo = photos[activeIndex];
+      lightboxImage.src = photo.src;
+      lightboxImage.alt = photo.alt;
+      lightboxTitle.textContent = `${photo.title} · ${photo.location} · ${photo.camera}`;
+      lightboxCounter.textContent = `${activeIndex + 1} / ${photos.length}`;
+    }
+
+    function openLightbox(index) {
+      showPhoto(index);
+      lightbox.classList.add('is-open');
+      document.body.classList.add('is-locked');
+      closeLightbox.focus();
+    }
+
+    function closePhoto() {
+      lightbox.classList.remove('is-open');
+      document.body.classList.remove('is-locked');
+      lightboxImage.src = '';
+    }
+
+    feed.addEventListener('click', (event) => {
+      const button = event.target.closest('.photo-button');
+      if (!button) return;
+      openLightbox(Number(button.dataset.index));
+    });
+
+    closeLightbox.addEventListener('click', closePhoto);
+    prevPhoto.addEventListener('click', () => showPhoto(activeIndex - 1));
+    nextPhoto.addEventListener('click', () => showPhoto(activeIndex + 1));
+    lightbox.addEventListener('click', (event) => {
+      if (event.target === lightbox) closePhoto();
+    });
+    window.addEventListener('keydown', (event) => {
+      if (!lightbox.classList.contains('is-open')) return;
+      if (event.key === 'Escape') closePhoto();
+      if (event.key === 'ArrowLeft') showPhoto(activeIndex - 1);
+      if (event.key === 'ArrowRight') showPhoto(activeIndex + 1);
+    });
+  </script>
+</body>
+</html>
