@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="theme-color" content="#f7f7f4">
-  <title>Photo Notes · Timeline</title>
+  <title>Photos by Abner Zhao · Timeline</title>
   <link rel="icon" href="favicon.svg" type="image/svg+xml">
   <style>
     * {
@@ -17,6 +17,7 @@
       --muted: #6f6f6a;
       --faint: #a8a8a1;
       --line: #dfded8;
+      --overlay: rgba(17, 17, 17, 0.86);
       --mono: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, monospace;
       --sans: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "PingFang SC", "Microsoft YaHei", sans-serif;
     }
@@ -31,6 +32,16 @@
       color: var(--ink);
       font-family: var(--sans);
       letter-spacing: 0;
+    }
+
+    body.is-locked {
+      overflow: hidden;
+    }
+
+    button {
+      border: 0;
+      font: inherit;
+      cursor: pointer;
     }
 
     img {
@@ -134,19 +145,57 @@
 
     .photos {
       display: grid;
-      gap: 24px;
+      gap: 8px;
+    }
+
+    .photos[data-count="1"] {
+      grid-template-columns: 1fr;
+    }
+
+    .photos[data-count="2"] {
+      grid-template-columns: repeat(2, 1fr);
+    }
+
+    .photos[data-count="3"],
+    .photos[data-count="4"],
+    .photos[data-count="5"],
+    .photos[data-count="6"] {
+      grid-template-columns: repeat(3, 1fr);
     }
 
     .photo {
       min-width: 0;
     }
 
-    .photo img {
+    .photo-button {
+      display: block;
       width: 100%;
-      max-height: 780px;
+      overflow: hidden;
       border-radius: 4px;
       background: #e5e4df;
+      padding: 0;
+      text-align: left;
+      aspect-ratio: 4 / 3;
+    }
+
+    .photos[data-count="1"] .photo-button {
+      aspect-ratio: auto;
+    }
+
+    .photo-button img {
+      width: 100%;
+      height: 100%;
       object-fit: cover;
+      transition: opacity 140ms ease;
+    }
+
+    .photos[data-count="1"] .photo-button img {
+      height: auto;
+      max-height: 780px;
+    }
+
+    .photo-button:hover img {
+      opacity: 0.82;
     }
 
     .meta {
@@ -167,6 +216,89 @@
 
     .foot {
       padding-top: 12px;
+    }
+
+    .lightbox {
+      position: fixed;
+      inset: 0;
+      z-index: 50;
+      display: none;
+      grid-template-rows: 1fr auto;
+      gap: 14px;
+      padding: clamp(14px, 3vw, 34px);
+      background: var(--overlay);
+    }
+
+    .lightbox.is-open {
+      display: grid;
+    }
+
+    .lightbox-stage {
+      position: relative;
+      display: grid;
+      place-items: center;
+      min-height: 0;
+    }
+
+    .lightbox-image {
+      max-width: 100%;
+      max-height: calc(100dvh - 120px);
+      border-radius: 4px;
+      object-fit: contain;
+      background: #101010;
+    }
+
+    .lightbox-meta {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 14px;
+      color: rgba(255, 255, 255, 0.72);
+      font-family: var(--mono);
+      font-size: 12px;
+      line-height: 1.45;
+    }
+
+    .lightbox-meta strong {
+      color: #fff;
+      font-weight: 700;
+    }
+
+    .lightbox-button,
+    .close-button {
+      display: grid;
+      place-items: center;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.9);
+      color: #111;
+      font-family: var(--mono);
+      font-weight: 700;
+    }
+
+    .close-button {
+      position: fixed;
+      top: 14px;
+      right: 14px;
+      width: 38px;
+      height: 38px;
+      font-size: 20px;
+    }
+
+    .lightbox-button {
+      position: absolute;
+      top: 50%;
+      width: 42px;
+      height: 42px;
+      transform: translateY(-50%);
+      font-size: 18px;
+    }
+
+    .lightbox-button.prev {
+      left: 0;
+    }
+
+    .lightbox-button.next {
+      right: 0;
     }
 
     @media (max-width: 680px) {
@@ -194,8 +326,33 @@
         padding-bottom: 34px;
       }
 
-      .photo img {
+      .photos {
+        gap: 6px;
+      }
+
+      .photos[data-count="3"],
+      .photos[data-count="4"],
+      .photos[data-count="5"],
+      .photos[data-count="6"] {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .photos[data-count="1"] .photo-button img {
         max-height: none;
+      }
+
+      .lightbox {
+        padding: 12px;
+      }
+
+      .lightbox-button {
+        width: 36px;
+        height: 36px;
+      }
+
+      .lightbox-meta {
+        align-items: flex-start;
+        flex-direction: column;
       }
     }
   </style>
@@ -204,7 +361,7 @@
   <main class="page">
     <header class="site-head">
       <div>
-        <h1>Photo Notes</h1>
+        <h1>Photos by Abner Zhao</h1>
         <div class="site-meta">TIMELINE</div>
       </div>
       <a class="nav-link" href="index.html">OVERVIEW</a>
@@ -212,12 +369,47 @@
 
     <section class="feed" id="feed" aria-label="照片时间线"></section>
 
-    <footer class="foot">Photo Notes</footer>
+    <footer class="foot">Photos by Abner Zhao</footer>
   </main>
+
+  <div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="照片预览">
+    <button class="close-button" id="closeLightbox" type="button" aria-label="关闭预览">×</button>
+    <div class="lightbox-stage">
+      <button class="lightbox-button prev" id="prevPhoto" type="button" aria-label="上一张">‹</button>
+      <img class="lightbox-image" id="lightboxImage" src="" alt="">
+      <button class="lightbox-button next" id="nextPhoto" type="button" aria-label="下一张">›</button>
+    </div>
+    <div class="lightbox-meta">
+      <strong id="lightboxTitle"></strong>
+      <span id="lightboxCounter"></span>
+    </div>
+  </div>
 
   <script src="data.js"></script>
   <script>
     const feed = document.querySelector('#feed');
+    const lightbox = document.querySelector('#lightbox');
+    const lightboxImage = document.querySelector('#lightboxImage');
+    const lightboxTitle = document.querySelector('#lightboxTitle');
+    const lightboxCounter = document.querySelector('#lightboxCounter');
+    const closeLightbox = document.querySelector('#closeLightbox');
+    const prevPhoto = document.querySelector('#prevPhoto');
+    const nextPhoto = document.querySelector('#nextPhoto');
+    let activeIndex = 0;
+
+    function flatPhotos() {
+      return window.photoEntries.flatMap((entry, entryIndex) => entry.photos.map((photo, photoIndex) => ({
+        ...photo,
+        entryIndex,
+        photoIndex,
+        title: entry.title,
+        date: entry.date,
+        location: entry.location,
+        camera: entry.camera
+      })));
+    }
+
+    const photos = flatPhotos();
 
     feed.innerHTML = window.photoEntries.map((entry, entryIndex) => `
       <article class="post">
@@ -229,16 +421,59 @@
             <span>${entry.camera}</span>
           </div>
           <div class="entry-note">${entry.description}</div>
-          <div class="photos">
+          <div class="photos" data-count="${entry.photos.length}">
             ${entry.photos.map((photo, photoIndex) => `
               <figure class="photo" id="photo-${entryIndex}-${photoIndex}">
-                <img src="${photo.src}" alt="${photo.alt}" loading="${entryIndex < 1 ? 'eager' : 'lazy'}">
+                <button class="photo-button" type="button" data-index="${photos.findIndex((item) => item.entryIndex === entryIndex && item.photoIndex === photoIndex)}" aria-label="查看 ${entry.title}">
+                  <img src="${photo.src}" alt="${photo.alt}" loading="${entryIndex < 1 ? 'eager' : 'lazy'}">
+                </button>
               </figure>
             `).join('')}
           </div>
         </div>
       </article>
     `).join('');
+
+    function showPhoto(index) {
+      activeIndex = (index + photos.length) % photos.length;
+      const photo = photos[activeIndex];
+      lightboxImage.src = photo.src;
+      lightboxImage.alt = photo.alt;
+      lightboxTitle.textContent = `${photo.title} · ${photo.location} · ${photo.camera}`;
+      lightboxCounter.textContent = `${activeIndex + 1} / ${photos.length}`;
+    }
+
+    function openLightbox(index) {
+      showPhoto(index);
+      lightbox.classList.add('is-open');
+      document.body.classList.add('is-locked');
+      closeLightbox.focus();
+    }
+
+    function closePhoto() {
+      lightbox.classList.remove('is-open');
+      document.body.classList.remove('is-locked');
+      lightboxImage.src = '';
+    }
+
+    feed.addEventListener('click', (event) => {
+      const button = event.target.closest('.photo-button');
+      if (!button) return;
+      openLightbox(Number(button.dataset.index));
+    });
+
+    closeLightbox.addEventListener('click', closePhoto);
+    prevPhoto.addEventListener('click', () => showPhoto(activeIndex - 1));
+    nextPhoto.addEventListener('click', () => showPhoto(activeIndex + 1));
+    lightbox.addEventListener('click', (event) => {
+      if (event.target === lightbox) closePhoto();
+    });
+    window.addEventListener('keydown', (event) => {
+      if (!lightbox.classList.contains('is-open')) return;
+      if (event.key === 'Escape') closePhoto();
+      if (event.key === 'ArrowLeft') showPhoto(activeIndex - 1);
+      if (event.key === 'ArrowRight') showPhoto(activeIndex + 1);
+    });
   </script>
 </body>
 </html>

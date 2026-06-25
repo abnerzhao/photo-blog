@@ -1,4 +1,4 @@
-# Photo Notes
+# Photos by Abner Zhao
 
 一个纯静态的个人摄影时间线，参考 `photos.sambecker.com` 的轻量照片流形态。
 
