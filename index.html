@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="theme-color" content="#f3f2ee">
+  <meta name="theme-color" content="#f7f7f4">
   <title>Photo Notes</title>
   <link rel="icon" href="favicon.svg" type="image/svg+xml">
   <style>
@@ -12,18 +12,15 @@
     }
 
     :root {
-      --paper: #f3f2ee;
-      --panel: #fbfaf6;
+      --bg: #f7f7f4;
       --ink: #171717;
-      --muted: #686864;
-      --soft: #a3a19a;
-      --line: #dcd9cf;
+      --muted: #6f6f6a;
+      --faint: #a8a8a1;
+      --line: #dfded8;
+      --chip: #eeeeea;
       --accent: #1f5f55;
-      --accent-ink: #ffffff;
-      --wash: #e4ece8;
-      --shadow: rgba(29, 31, 28, 0.13);
-      --sans: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "PingFang SC", "Microsoft YaHei", sans-serif;
       --mono: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, monospace;
+      --sans: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "PingFang SC", "Microsoft YaHei", sans-serif;
     }
 
     html {
@@ -32,14 +29,10 @@
 
     body {
       margin: 0;
-      background: var(--paper);
+      background: var(--bg);
       color: var(--ink);
       font-family: var(--sans);
       letter-spacing: 0;
-    }
-
-    body.is-locked {
-      overflow: hidden;
     }
 
     button {
@@ -53,325 +46,96 @@
       max-width: 100%;
     }
 
-    a {
-      color: inherit;
-      text-decoration: none;
-    }
-
-    .site-shell {
-      min-height: 100dvh;
-      background:
-        linear-gradient(90deg, rgba(31, 95, 85, 0.08) 0 1px, transparent 1px 100%),
-        linear-gradient(180deg, rgba(31, 95, 85, 0.055) 0 1px, transparent 1px 100%),
-        var(--paper);
-      background-size: 72px 72px;
-    }
-
-    .topbar {
-      position: sticky;
-      top: 0;
-      z-index: 20;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 18px;
-      min-height: 68px;
-      padding: 0 clamp(18px, 4vw, 56px);
-      border-bottom: 1px solid rgba(220, 217, 207, 0.76);
-      background: rgba(243, 242, 238, 0.84);
-      backdrop-filter: blur(18px);
-    }
-
-    .brand {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      min-width: 0;
-      font-weight: 700;
-    }
-
-    .brand-mark {
-      width: 26px;
-      height: 26px;
-      border: 2px solid var(--ink);
-      border-radius: 50%;
-      background:
-        linear-gradient(90deg, transparent 45%, var(--ink) 45% 55%, transparent 55%),
-        linear-gradient(180deg, transparent 45%, var(--ink) 45% 55%, transparent 55%);
-      flex: 0 0 auto;
-    }
-
-    .nav {
-      display: flex;
-      align-items: center;
-      gap: clamp(14px, 2.4vw, 28px);
-      color: var(--muted);
-      font-size: 14px;
-      white-space: nowrap;
-    }
-
-    .nav a:hover {
-      color: var(--ink);
-    }
-
-    .hero {
-      display: grid;
-      grid-template-columns: minmax(0, 0.88fr) minmax(320px, 1.12fr);
-      gap: clamp(28px, 5vw, 84px);
-      align-items: end;
-      max-width: 1420px;
-      min-height: calc(100dvh - 92px);
+    .page {
+      width: min(100%, 780px);
       margin: 0 auto;
-      padding: clamp(28px, 5vw, 62px) clamp(18px, 4vw, 56px) 30px;
+      padding: 36px 20px 64px;
     }
 
-    .hero-copy {
-      padding-bottom: clamp(0px, 5vw, 58px);
-    }
-
-    .eyebrow {
-      margin: 0 0 18px;
-      color: var(--accent);
-      font-family: var(--mono);
-      font-size: 12px;
-      font-weight: 700;
-      line-height: 1;
+    .site-head {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 24px;
+      align-items: end;
+      border-bottom: 1px solid var(--line);
+      padding-bottom: 24px;
     }
 
     h1 {
-      max-width: 780px;
       margin: 0;
-      font-size: clamp(48px, 8vw, 112px);
-      font-weight: 750;
-      line-height: 0.95;
+      font-size: clamp(30px, 7vw, 54px);
+      font-weight: 760;
+      line-height: 0.98;
       letter-spacing: 0;
     }
 
-    .hero-copy p {
+    .intro {
       max-width: 520px;
-      margin: 24px 0 0;
-      color: var(--muted);
-      font-size: clamp(16px, 1.4vw, 19px);
-      line-height: 1.65;
-    }
-
-    .hero-actions {
-      display: flex;
-      align-items: center;
-      flex-wrap: wrap;
-      gap: 12px;
-      margin-top: 30px;
-    }
-
-    .button {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      min-height: 44px;
-      border-radius: 999px;
-      padding: 0 18px;
-      font-weight: 700;
-      white-space: nowrap;
-      transition: transform 160ms ease, border-color 160ms ease, background 160ms ease;
-    }
-
-    .button:active {
-      transform: translateY(1px) scale(0.99);
-    }
-
-    .button.primary {
-      background: var(--accent);
-      color: var(--accent-ink);
-    }
-
-    .button.ghost {
-      border: 1px solid var(--line);
-      background: rgba(251, 250, 246, 0.7);
-      color: var(--ink);
-    }
-
-    .button.ghost:hover {
-      border-color: rgba(31, 95, 85, 0.46);
-    }
-
-    .hero-board {
-      display: grid;
-      grid-template-columns: 1.18fr 0.82fr;
-      gap: 14px;
-      align-items: end;
-    }
-
-    .hero-card {
-      overflow: hidden;
-      border: 1px solid rgba(23, 23, 23, 0.08);
-      border-radius: 8px;
-      background: var(--panel);
-      box-shadow: 0 28px 70px var(--shadow);
-    }
-
-    .hero-card.large {
-      transform: translateY(22px);
-    }
-
-    .hero-card.small {
-      margin-bottom: 92px;
-    }
-
-    .hero-card img {
-      width: 100%;
-      height: clamp(300px, 38vw, 560px);
-      object-fit: cover;
-      filter: saturate(0.93) contrast(1.03);
-    }
-
-    .hero-card.small img {
-      height: clamp(210px, 24vw, 330px);
-    }
-
-    .image-caption {
-      display: flex;
-      align-items: baseline;
-      justify-content: space-between;
-      gap: 14px;
-      padding: 12px 14px;
-      border-top: 1px solid var(--line);
-      color: var(--muted);
-      font-size: 13px;
-    }
-
-    .image-caption strong {
-      color: var(--ink);
-      font-size: 14px;
-    }
-
-    .section {
-      max-width: 1420px;
-      margin: 0 auto;
-      padding: 72px clamp(18px, 4vw, 56px);
-    }
-
-    .section-head {
-      max-width: 740px;
-      margin-bottom: 30px;
-    }
-
-    h2 {
-      margin: 0;
-      font-size: clamp(30px, 4vw, 56px);
-      line-height: 1.02;
-      letter-spacing: 0;
-    }
-
-    .section-head p {
       margin: 14px 0 0;
       color: var(--muted);
-      font-size: 17px;
+      font-size: 15px;
+      line-height: 1.75;
+    }
+
+    .site-meta {
+      color: var(--faint);
+      font-family: var(--mono);
+      font-size: 12px;
       line-height: 1.7;
-    }
-
-    .featured-strip {
-      display: grid;
-      grid-template-columns: 1.15fr 0.85fr 0.72fr;
-      gap: 16px;
-      align-items: stretch;
-    }
-
-    .featured-item {
-      position: relative;
-      min-height: 430px;
-      overflow: hidden;
-      border-radius: 8px;
-      background: #d9d8d3;
-      isolation: isolate;
-    }
-
-    .featured-item:nth-child(2) {
-      min-height: 360px;
-      margin-top: 70px;
-    }
-
-    .featured-item:nth-child(3) {
-      min-height: 300px;
-      margin-top: 30px;
-    }
-
-    .featured-item img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      transition: transform 700ms ease;
-    }
-
-    .featured-item:hover img {
-      transform: scale(1.035);
-    }
-
-    .featured-label {
-      position: absolute;
-      right: 12px;
-      bottom: 12px;
-      left: 12px;
-      display: flex;
-      justify-content: space-between;
-      gap: 12px;
-      padding: 12px;
-      border-radius: 8px;
-      background: rgba(14, 16, 15, 0.58);
-      color: #fff;
-      backdrop-filter: blur(12px);
-      font-size: 13px;
+      text-align: right;
+      white-space: nowrap;
     }
 
     .filters {
-      display: flex;
-      align-items: center;
-      flex-wrap: wrap;
-      gap: 10px;
-      margin-bottom: 26px;
-    }
-
-    .filter-button {
-      min-height: 36px;
-      border: 1px solid var(--line);
-      border-radius: 999px;
-      background: rgba(251, 250, 246, 0.72);
-      color: var(--muted);
-      padding: 0 14px;
-      font-size: 14px;
-      transition: transform 160ms ease, border-color 160ms ease, background 160ms ease, color 160ms ease;
-    }
-
-    .filter-button:hover,
-    .filter-button.is-active {
-      border-color: var(--accent);
-      background: var(--accent);
-      color: var(--accent-ink);
-    }
-
-    .filter-button:active {
-      transform: translateY(1px) scale(0.98);
-    }
-
-    .timeline {
-      position: relative;
-      display: grid;
-      gap: 22px;
-    }
-
-    .timeline::before {
-      content: "";
-      position: absolute;
+      position: sticky;
       top: 0;
-      bottom: 0;
-      left: 110px;
-      width: 1px;
-      background: var(--line);
+      z-index: 10;
+      display: flex;
+      gap: 8px;
+      overflow-x: auto;
+      margin: 0 -20px;
+      padding: 16px 20px;
+      border-bottom: 1px solid rgba(223, 222, 216, 0.72);
+      background: rgba(247, 247, 244, 0.88);
+      backdrop-filter: blur(14px);
+      scrollbar-width: none;
+    }
+
+    .filters::-webkit-scrollbar {
+      display: none;
+    }
+
+    .filter {
+      flex: 0 0 auto;
+      min-height: 34px;
+      border-radius: 999px;
+      background: transparent;
+      color: var(--muted);
+      padding: 0 12px;
+      font-size: 14px;
+      transition: background 140ms ease, color 140ms ease, transform 140ms ease;
+    }
+
+    .filter:hover,
+    .filter.is-active {
+      background: var(--ink);
+      color: #fff;
+    }
+
+    .filter:active {
+      transform: translateY(1px);
+    }
+
+    .feed {
+      display: grid;
+      gap: 42px;
+      padding-top: 34px;
     }
 
     .post {
       display: grid;
-      grid-template-columns: 96px minmax(0, 1fr);
-      gap: 28px;
+      grid-template-columns: 86px minmax(0, 1fr);
+      gap: 22px;
       align-items: start;
     }
 
@@ -381,463 +145,148 @@
 
     .date {
       position: sticky;
-      top: 90px;
-      z-index: 1;
-      padding-top: 14px;
-      color: var(--muted);
+      top: 82px;
+      color: var(--faint);
       font-family: var(--mono);
       font-size: 12px;
-      line-height: 1.5;
-    }
-
-    .post-card {
-      display: grid;
-      grid-template-columns: minmax(280px, 0.92fr) minmax(260px, 0.58fr);
-      gap: 0;
-      overflow: hidden;
-      border: 1px solid var(--line);
-      border-radius: 8px;
-      background: rgba(251, 250, 246, 0.86);
-      box-shadow: 0 16px 45px rgba(29, 31, 28, 0.08);
-    }
-
-    .photo-button {
-      position: relative;
-      display: block;
-      width: 100%;
-      min-height: 420px;
-      overflow: hidden;
-      background: #d8d7d1;
-      padding: 0;
-      text-align: left;
-    }
-
-    .photo-button img {
-      width: 100%;
-      height: 100%;
-      min-height: 420px;
-      object-fit: cover;
-      transition: transform 800ms ease, filter 800ms ease;
-    }
-
-    .photo-button:hover img {
-      transform: scale(1.025);
-      filter: saturate(1.03);
-    }
-
-    .photo-button::after {
-      content: "查看";
-      position: absolute;
-      right: 14px;
-      bottom: 14px;
-      border-radius: 999px;
-      background: rgba(14, 16, 15, 0.6);
-      color: #fff;
-      padding: 8px 12px;
-      font-size: 13px;
-      opacity: 0;
-      transform: translateY(6px);
-      transition: opacity 180ms ease, transform 180ms ease;
-      backdrop-filter: blur(10px);
-    }
-
-    .photo-button:hover::after {
-      opacity: 1;
-      transform: translateY(0);
-    }
-
-    .post-body {
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-      gap: 28px;
-      padding: clamp(22px, 3vw, 36px);
-    }
-
-    .post-body h3 {
-      margin: 0;
-      font-size: clamp(25px, 3vw, 38px);
-      line-height: 1.08;
-      letter-spacing: 0;
-    }
-
-    .post-body p {
-      margin: 14px 0 0;
-      color: var(--muted);
-      font-size: 16px;
-      line-height: 1.75;
-    }
-
-    .meta-list {
-      display: grid;
-      gap: 8px;
-      margin: 0;
-      padding: 0;
-      list-style: none;
-      color: var(--muted);
-      font-size: 13px;
-    }
-
-    .meta-list li {
-      display: flex;
-      justify-content: space-between;
-      gap: 16px;
-      border-top: 1px solid var(--line);
-      padding-top: 8px;
-    }
-
-    .meta-list span:first-child {
-      color: var(--soft);
-      font-family: var(--mono);
-      font-size: 11px;
-    }
-
-    .about {
-      display: grid;
-      grid-template-columns: minmax(260px, 0.72fr) minmax(300px, 1fr);
-      gap: clamp(30px, 6vw, 100px);
-      align-items: start;
-      border-top: 1px solid var(--line);
-    }
-
-    .about-note {
-      display: grid;
-      gap: 14px;
-      color: var(--muted);
-      font-size: 17px;
-      line-height: 1.75;
-    }
-
-    .about-note p {
-      margin: 0;
-    }
-
-    .about-stats {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 12px;
-    }
-
-    .stat {
-      min-height: 132px;
-      border: 1px solid var(--line);
-      border-radius: 8px;
-      background: rgba(251, 250, 246, 0.7);
-      padding: 18px;
-    }
-
-    .stat strong {
-      display: block;
-      color: var(--accent);
-      font-size: 34px;
-      line-height: 1;
-    }
-
-    .stat span {
-      display: block;
-      margin-top: 10px;
-      color: var(--muted);
-      font-size: 14px;
       line-height: 1.45;
     }
 
-    .footer {
-      max-width: 1420px;
-      margin: 0 auto;
-      padding: 42px clamp(18px, 4vw, 56px) 56px;
-      color: var(--muted);
-      font-size: 14px;
+    .entry {
+      min-width: 0;
+      border-bottom: 1px solid var(--line);
+      padding-bottom: 42px;
     }
 
-    .lightbox {
-      position: fixed;
-      inset: 0;
-      z-index: 50;
-      display: none;
-      grid-template-columns: minmax(0, 1fr);
-      place-items: center;
-      padding: clamp(16px, 4vw, 44px);
-      background: rgba(17, 17, 17, 0.84);
-    }
-
-    .lightbox.is-open {
-      display: grid;
-    }
-
-    .lightbox-panel {
-      width: min(1180px, 100%);
-      max-height: 92dvh;
-      overflow: hidden;
-      border-radius: 8px;
-      background: var(--panel);
-      box-shadow: 0 30px 100px rgba(0, 0, 0, 0.42);
-    }
-
-    .lightbox img {
+    .entry img {
       width: 100%;
-      max-height: 72dvh;
-      object-fit: contain;
-      background: #0f0f0f;
+      max-height: 780px;
+      border-radius: 4px;
+      background: #e5e4df;
+      object-fit: cover;
     }
 
-    .lightbox-info {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 18px;
-      padding: 14px 16px;
+    .entry h2 {
+      margin: 18px 0 0;
+      font-size: clamp(22px, 4.8vw, 34px);
+      font-weight: 720;
+      line-height: 1.12;
+      letter-spacing: 0;
+    }
+
+    .entry p {
+      margin: 10px 0 0;
       color: var(--muted);
+      font-size: 15px;
+      line-height: 1.78;
     }
 
-    .lightbox-info strong {
-      color: var(--ink);
+    .meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 14px;
     }
 
-    .close-button {
-      position: fixed;
-      top: 16px;
-      right: 16px;
-      width: 42px;
-      height: 42px;
+    .meta span {
       border-radius: 999px;
-      background: rgba(255, 255, 255, 0.92);
-      color: var(--ink);
-      font-size: 24px;
+      background: var(--chip);
+      color: var(--muted);
+      padding: 6px 9px;
+      font-family: var(--mono);
+      font-size: 11px;
       line-height: 1;
+    }
+
+    .tag {
+      color: var(--accent) !important;
     }
 
     .empty {
       display: none;
       border: 1px dashed var(--line);
-      border-radius: 8px;
-      background: rgba(251, 250, 246, 0.7);
-      padding: 34px;
+      border-radius: 4px;
+      padding: 28px;
       color: var(--muted);
+      font-size: 14px;
     }
 
     .empty.is-visible {
       display: block;
     }
 
-    @media (max-width: 1020px) {
-      .hero,
-      .about {
-        grid-template-columns: 1fr;
-      }
-
-      .hero {
-        min-height: auto;
-      }
-
-      .hero-copy {
-        padding-bottom: 0;
-      }
-
-      .hero-board {
-        max-width: 760px;
-      }
-
-      .featured-strip,
-      .post-card {
-        grid-template-columns: 1fr;
-      }
-
-      .featured-item,
-      .featured-item:nth-child(2),
-      .featured-item:nth-child(3) {
-        min-height: 360px;
-        margin-top: 0;
-      }
+    .foot {
+      padding-top: 12px;
+      color: var(--faint);
+      font-family: var(--mono);
+      font-size: 12px;
     }
 
-    @media (max-width: 720px) {
-      .topbar {
-        min-height: 62px;
-        align-items: flex-start;
-        flex-direction: column;
-        justify-content: center;
-        padding-top: 10px;
-        padding-bottom: 10px;
+    @media (max-width: 680px) {
+      .page {
+        padding: 26px 16px 48px;
       }
 
-      .nav {
-        width: 100%;
-        overflow-x: auto;
-        padding-bottom: 2px;
-      }
-
-      .hero {
-        padding-top: 34px;
-      }
-
-      h1 {
-        font-size: clamp(42px, 14vw, 74px);
-      }
-
-      .hero-board {
+      .site-head {
         grid-template-columns: 1fr;
+        gap: 14px;
       }
 
-      .hero-card.large {
-        transform: none;
+      .site-meta {
+        text-align: left;
       }
 
-      .hero-card.small {
-        margin-bottom: 0;
-      }
-
-      .hero-card img,
-      .hero-card.small img,
-      .photo-button,
-      .photo-button img {
-        min-height: 0;
-        height: auto;
-        aspect-ratio: 4 / 5;
-      }
-
-      .section {
-        padding-top: 54px;
-        padding-bottom: 54px;
-      }
-
-      .timeline::before {
-        left: 0;
+      .filters {
+        margin: 0 -16px;
+        padding-right: 16px;
+        padding-left: 16px;
       }
 
       .post {
         grid-template-columns: 1fr;
-        gap: 10px;
-        padding-left: 16px;
+        gap: 8px;
       }
 
       .date {
         position: static;
-        padding-top: 0;
       }
 
-      .post-body {
-        padding: 20px;
+      .entry {
+        padding-bottom: 34px;
       }
 
-      .about-stats {
-        grid-template-columns: 1fr;
-      }
-
-      .lightbox-info {
-        align-items: flex-start;
-        flex-direction: column;
+      .entry img {
+        max-height: none;
       }
     }
   </style>
 </head>
 <body>
-  <div class="site-shell">
-    <header class="topbar">
-      <a class="brand" href="#" aria-label="Photo Notes 首页">
-        <span class="brand-mark" aria-hidden="true"></span>
-        <span>Photo Notes</span>
-      </a>
-      <nav class="nav" aria-label="主导航">
-        <a href="#featured">精选</a>
-        <a href="#timeline">时间线</a>
-        <a href="#about">关于</a>
-      </nav>
+  <main class="page">
+    <header class="site-head">
+      <div>
+        <h1>Photo Notes</h1>
+        <p class="intro">个人摄影记录。像发一条轻微博一样，把照片、时间、地点、器材和当时的几句话放在一起。</p>
+      </div>
+      <div class="site-meta">
+        RECENT PHOTOS<br>
+        SHANGHAI / TRAVEL
+      </div>
     </header>
 
-    <main>
-      <section class="hero" aria-labelledby="heroTitle">
-        <div class="hero-copy">
-          <p class="eyebrow">PERSONAL PHOTO STREAM</p>
-          <h1 id="heroTitle">把日常拍成一条时间线。</h1>
-          <p>记录街头、山野、旅行和安静片刻。每张照片都保留时间、地点、设备与当时的文字。</p>
-          <div class="hero-actions">
-            <a class="button primary" href="#timeline">看照片</a>
-            <a class="button ghost" href="#about">了解作者</a>
-          </div>
-        </div>
+    <nav class="filters" aria-label="按主题筛选">
+      <button class="filter is-active" type="button" data-filter="all">全部</button>
+      <button class="filter" type="button" data-filter="street">街头</button>
+      <button class="filter" type="button" data-filter="travel">旅行</button>
+      <button class="filter" type="button" data-filter="nature">自然</button>
+      <button class="filter" type="button" data-filter="night">夜晚</button>
+    </nav>
 
-        <div class="hero-board" aria-label="近期摄影作品">
-          <figure class="hero-card large">
-            <img src="https://picsum.photos/seed/photo-stream-morning-platform/1200/1500" alt="清晨站台上的光线">
-            <figcaption class="image-caption"><strong>Morning Platform</strong><span>2026.05</span></figcaption>
-          </figure>
-          <figure class="hero-card small">
-            <img src="https://picsum.photos/seed/photo-stream-lake-wind/900/1200" alt="湖边风吹过的树影">
-            <figcaption class="image-caption"><strong>Lake Wind</strong><span>50mm</span></figcaption>
-          </figure>
-        </div>
-      </section>
+    <section class="feed" id="feed" aria-label="照片时间线"></section>
+    <div class="empty" id="empty">这个分类暂时没有照片。</div>
 
-      <section class="section" id="featured" aria-labelledby="featuredTitle">
-        <div class="section-head">
-          <h2 id="featuredTitle">最近喜欢的三张。</h2>
-          <p>不按热度排序，只保留当下仍想多看一眼的画面。</p>
-        </div>
-        <div class="featured-strip">
-          <article class="featured-item">
-            <img src="https://picsum.photos/seed/photo-stream-fog-road/1200/900" alt="薄雾里的公路">
-            <div class="featured-label"><strong>Fog Road</strong><span>浙江 · 2026</span></div>
-          </article>
-          <article class="featured-item">
-            <img src="https://picsum.photos/seed/photo-stream-window-rain/900/1200" alt="雨天窗边的反光">
-            <div class="featured-label"><strong>Window Rain</strong><span>上海 · 夜</span></div>
-          </article>
-          <article class="featured-item">
-            <img src="https://picsum.photos/seed/photo-stream-green-hill/900/1000" alt="绿色山坡与远处云层">
-            <div class="featured-label"><strong>Green Hill</strong><span>35mm</span></div>
-          </article>
-        </div>
-      </section>
-
-      <section class="section" id="timeline" aria-labelledby="timelineTitle">
-        <div class="section-head">
-          <h2 id="timelineTitle">照片时间线。</h2>
-          <p>轻量微博式记录，图片、文字和拍摄信息放在一起。</p>
-        </div>
-
-        <div class="filters" aria-label="按主题筛选照片">
-          <button class="filter-button is-active" type="button" data-filter="all">全部</button>
-          <button class="filter-button" type="button" data-filter="street">街头</button>
-          <button class="filter-button" type="button" data-filter="travel">旅行</button>
-          <button class="filter-button" type="button" data-filter="nature">自然</button>
-          <button class="filter-button" type="button" data-filter="night">夜晚</button>
-        </div>
-
-        <div class="timeline" id="photoTimeline"></div>
-        <div class="empty" id="emptyState">这个分类暂时没有照片。</div>
-      </section>
-
-      <section class="section about" id="about" aria-labelledby="aboutTitle">
-        <div>
-          <h2 id="aboutTitle">关于这本相册。</h2>
-        </div>
-        <div class="about-note">
-          <p>这个页面适合继续扩展成静态照片博客：照片数据放在数组里，之后可以替换为 Markdown、JSON 或相册目录扫描。</p>
-          <p>每条记录都围绕一张图展开，重点放在照片本身，而不是复杂的社交互动。</p>
-          <div class="about-stats" aria-label="相册数据">
-            <div class="stat"><strong>06</strong><span>示例作品，覆盖四类主题</span></div>
-            <div class="stat"><strong>04</strong><span>可筛选的摄影标签</span></div>
-            <div class="stat"><strong>0</strong><span>构建步骤，直接打开即可</span></div>
-          </div>
-        </div>
-      </section>
-    </main>
-
-    <footer class="footer">
-      Photo Notes · A quiet stream for personal photography.
-    </footer>
-  </div>
-
-  <div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="照片预览">
-    <button class="close-button" id="closeLightbox" type="button" aria-label="关闭预览">×</button>
-    <div class="lightbox-panel">
-      <img id="lightboxImage" src="" alt="">
-      <div class="lightbox-info">
-        <strong id="lightboxTitle"></strong>
-        <span id="lightboxMeta"></span>
-      </div>
-    </div>
-  </div>
+    <footer class="foot">静态页面 · 照片数据在 index.html 的 photos 数组里</footer>
+  </main>
 
   <script>
     const photos = [
@@ -848,8 +297,8 @@
         tagLabel: '街头',
         location: '上海 · 武康路',
         camera: 'Fujifilm X100VI',
-        lens: '23mm · f/2.8',
-        description: '雨后十分钟，路面反光还在，行人开始从屋檐下走出来。画面里最安静的是那束偏冷的光。',
+        exif: '23mm · f/2.8 · 1/250 · ISO 400',
+        text: '雨后十分钟，路面反光还在。行人开始从屋檐下走出来，整条街慢慢恢复声音。',
         src: 'https://picsum.photos/seed/photo-stream-after-rain-street/1400/1050',
         alt: '雨后街道路面反光与行人'
       },
@@ -860,8 +309,8 @@
         tagLabel: '自然',
         location: '浙江 · 莫干山',
         camera: 'Sony A7C II',
-        lens: '55mm · f/4',
-        description: '云层压得很低，山坡上的树被风吹成同一个方向。没有等到日落，但这张更像那天的天气。',
+        exif: '55mm · f/4 · 1/500 · ISO 200',
+        text: '云压得很低，树被风吹成同一个方向。没有等到日落，但这张更像那天的天气。',
         src: 'https://picsum.photos/seed/photo-stream-mountain-wind/1400/1100',
         alt: '山坡树木与低云'
       },
@@ -872,8 +321,8 @@
         tagLabel: '夜晚',
         location: '杭州 · 东站',
         camera: 'Ricoh GR IIIx',
-        lens: '40mm · f/2.8',
-        description: '车厢里的灯和站台广告牌叠在一起，玻璃把两个空间压成一张平面。',
+        exif: '40mm · f/2.8 · 1/80 · ISO 1250',
+        text: '车厢里的灯和站台广告牌叠在一起，玻璃把两个空间压成一张平面。',
         src: 'https://picsum.photos/seed/photo-stream-night-train-window/1400/1000',
         alt: '夜晚列车窗口与站台灯光倒影'
       },
@@ -884,8 +333,8 @@
         tagLabel: '旅行',
         location: '福建 · 平潭',
         camera: 'Nikon Zf',
-        lens: '35mm · f/5.6',
-        description: '午后的光很硬，白墙把阴影切得很清楚。海没有入镜，但风和盐味都在。',
+        exif: '35mm · f/5.6 · 1/1000 · ISO 100',
+        text: '午后的光很硬，白墙把阴影切得很清楚。海没有入镜，但风和盐味都在。',
         src: 'https://picsum.photos/seed/photo-stream-white-wall-sea/1400/1100',
         alt: '海边白墙与清晰阴影'
       },
@@ -896,8 +345,8 @@
         tagLabel: '街头',
         location: '上海 · 长乐路',
         camera: 'Leica Q3',
-        lens: '28mm · f/1.7',
-        description: '晚上十一点，便利店像一只小灯箱。路过的人都没有停下，但每个人都被照亮了一秒。',
+        exif: '28mm · f/1.7 · 1/160 · ISO 800',
+        text: '晚上十一点，便利店像一只小灯箱。路过的人都没有停下，但每个人都被照亮了一秒。',
         src: 'https://picsum.photos/seed/photo-stream-convenience-store/1400/1000',
         alt: '夜晚便利店门口与行人'
       },
@@ -908,96 +357,56 @@
         tagLabel: '自然',
         location: '江苏 · 苏州',
         camera: 'Canon R6 II',
-        lens: '70mm · f/4',
-        description: '水面平得像纸，远处的树影被压得很薄。那天没有特别的事情发生，所以记得更清楚。',
+        exif: '70mm · f/4 · 1/640 · ISO 100',
+        text: '水面平得像纸，远处的树影被压得很薄。那天没有特别的事情发生，所以记得更清楚。',
         src: 'https://picsum.photos/seed/photo-stream-still-lake/1400/1050',
         alt: '平静湖面与远处树影'
       }
     ];
 
-    const timeline = document.querySelector('#photoTimeline');
-    const filterButtons = [...document.querySelectorAll('.filter-button')];
-    const emptyState = document.querySelector('#emptyState');
-    const lightbox = document.querySelector('#lightbox');
-    const lightboxImage = document.querySelector('#lightboxImage');
-    const lightboxTitle = document.querySelector('#lightboxTitle');
-    const lightboxMeta = document.querySelector('#lightboxMeta');
-    const closeLightbox = document.querySelector('#closeLightbox');
+    const feed = document.querySelector('#feed');
+    const empty = document.querySelector('#empty');
+    const filters = [...document.querySelectorAll('.filter')];
 
-    function renderPhotos() {
-      timeline.innerHTML = photos.map((photo, index) => `
+    function render() {
+      feed.innerHTML = photos.map((photo, index) => `
         <article class="post" data-tag="${photo.tag}">
           <time class="date" datetime="${photo.date.replaceAll('.', '-')}">${photo.date}<br>${photo.tagLabel}</time>
-          <div class="post-card">
-            <button class="photo-button" type="button" data-index="${index}" aria-label="查看 ${photo.title}">
-              <img src="${photo.src}" alt="${photo.alt}" loading="${index < 2 ? 'eager' : 'lazy'}">
-            </button>
-            <div class="post-body">
-              <div>
-                <h3>${photo.title}</h3>
-                <p>${photo.description}</p>
-              </div>
-              <ul class="meta-list">
-                <li><span>LOCATION</span><strong>${photo.location}</strong></li>
-                <li><span>CAMERA</span><strong>${photo.camera}</strong></li>
-                <li><span>LENS</span><strong>${photo.lens}</strong></li>
-              </ul>
+          <div class="entry">
+            <img src="${photo.src}" alt="${photo.alt}" loading="${index < 2 ? 'eager' : 'lazy'}">
+            <h2>${photo.title}</h2>
+            <p>${photo.text}</p>
+            <div class="meta" aria-label="拍摄信息">
+              <span>${photo.location}</span>
+              <span>${photo.camera}</span>
+              <span>${photo.exif}</span>
+              <span class="tag">#${photo.tagLabel}</span>
             </div>
           </div>
         </article>
       `).join('');
     }
 
-    function applyFilter(tag) {
-      let visible = 0;
+    function filterBy(tag) {
+      let count = 0;
 
       document.querySelectorAll('.post').forEach((post) => {
-        const matches = tag === 'all' || post.dataset.tag === tag;
-        post.classList.toggle('is-hidden', !matches);
-        if (matches) visible += 1;
+        const visible = tag === 'all' || post.dataset.tag === tag;
+        post.classList.toggle('is-hidden', !visible);
+        if (visible) count += 1;
       });
 
-      emptyState.classList.toggle('is-visible', visible === 0);
-      filterButtons.forEach((button) => {
+      filters.forEach((button) => {
         button.classList.toggle('is-active', button.dataset.filter === tag);
       });
+
+      empty.classList.toggle('is-visible', count === 0);
     }
 
-    function openPhoto(index) {
-      const photo = photos[index];
-      lightboxImage.src = photo.src;
-      lightboxImage.alt = photo.alt;
-      lightboxTitle.textContent = photo.title;
-      lightboxMeta.textContent = `${photo.date} · ${photo.location} · ${photo.camera}`;
-      lightbox.classList.add('is-open');
-      document.body.classList.add('is-locked');
-      closeLightbox.focus();
-    }
+    render();
 
-    function closePhoto() {
-      lightbox.classList.remove('is-open');
-      document.body.classList.remove('is-locked');
-      lightboxImage.src = '';
-    }
-
-    renderPhotos();
-
-    filterButtons.forEach((button) => {
-      button.addEventListener('click', () => applyFilter(button.dataset.filter));
-    });
-
-    timeline.addEventListener('click', (event) => {
-      const button = event.target.closest('.photo-button');
-      if (!button) return;
-      openPhoto(Number(button.dataset.index));
-    });
-
-    closeLightbox.addEventListener('click', closePhoto);
-    lightbox.addEventListener('click', (event) => {
-      if (event.target === lightbox) closePhoto();
-    });
-    window.addEventListener('keydown', (event) => {
-      if (event.key === 'Escape' && lightbox.classList.contains('is-open')) closePhoto();
+    filters.forEach((button) => {
+      button.addEventListener('click', () => filterBy(button.dataset.filter));
     });
   </script>
 </body>
