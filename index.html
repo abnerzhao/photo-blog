@@ -21,10 +21,6 @@
       --sans: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "PingFang SC", "Microsoft YaHei", sans-serif;
     }
 
-    html {
-      scroll-behavior: smooth;
-    }
-
     body {
       margin: 0;
       background: var(--bg);
@@ -33,28 +29,27 @@
       letter-spacing: 0;
     }
 
-    button {
-      border: 0;
-      font: inherit;
-      cursor: pointer;
-    }
-
     img {
       display: block;
       max-width: 100%;
     }
 
-    figure {
-      margin: 0;
+    a {
+      color: inherit;
+      text-decoration: none;
     }
 
     .page {
-      width: min(100%, 820px);
+      width: min(100%, 920px);
       margin: 0 auto;
       padding: 32px 20px 64px;
     }
 
     .site-head {
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      gap: 18px;
       border-bottom: 1px solid var(--line);
       padding-bottom: 18px;
     }
@@ -67,20 +62,28 @@
       letter-spacing: 0;
     }
 
-    .site-meta {
-      margin-top: 6px;
+    .site-meta,
+    .nav-link,
+    .foot {
       color: var(--faint);
       font-family: var(--mono);
       font-size: 12px;
       line-height: 1.4;
     }
 
+    .site-meta {
+      margin-top: 6px;
+    }
+
+    .nav-link:hover {
+      color: var(--ink);
+    }
+
     .overview {
       display: grid;
       grid-template-columns: repeat(6, 1fr);
       gap: 6px;
-      padding: 22px 0 28px;
-      border-bottom: 1px solid var(--line);
+      padding-top: 22px;
     }
 
     .overview a {
@@ -102,77 +105,10 @@
       opacity: 0.78;
     }
 
-    .feed {
-      display: grid;
-      gap: 50px;
-      padding-top: 28px;
-    }
-
-    .post {
-      display: grid;
-      grid-template-columns: 92px minmax(0, 1fr);
-      gap: 22px;
-      align-items: start;
-    }
-
-    .date {
-      position: sticky;
-      top: 24px;
-      color: var(--faint);
-      font-family: var(--mono);
-      font-size: 12px;
-      line-height: 1.45;
-    }
-
-    .entry {
-      display: grid;
-      gap: 24px;
-      min-width: 0;
-      border-bottom: 1px solid var(--line);
-      padding-bottom: 38px;
-    }
-
-    .photo {
-      min-width: 0;
-    }
-
-    .photo img {
-      width: 100%;
-      max-height: 780px;
-      border-radius: 4px;
-      background: #e5e4df;
-      object-fit: cover;
-    }
-
-    .photo h2 {
-      margin: 14px 0 0;
-      font-size: 18px;
-      font-weight: 680;
-      line-height: 1.28;
-      letter-spacing: 0;
-    }
-
-    .meta {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 6px 10px;
-      margin-top: 8px;
-      color: var(--muted);
-      font-size: 13px;
-      line-height: 1.55;
-    }
-
-    .meta span + span::before {
-      content: "/";
-      margin-right: 10px;
-      color: var(--faint);
-    }
-
     .foot {
-      padding-top: 12px;
-      color: var(--faint);
-      font-family: var(--mono);
-      font-size: 12px;
+      border-top: 1px solid var(--line);
+      margin-top: 28px;
+      padding-top: 14px;
     }
 
     @media (max-width: 680px) {
@@ -181,6 +117,9 @@
       }
 
       .site-head {
+        align-items: flex-start;
+        flex-direction: column;
+        gap: 12px;
         padding-bottom: 16px;
       }
 
@@ -188,24 +127,6 @@
         grid-template-columns: repeat(3, 1fr);
         gap: 5px;
         padding-top: 18px;
-        padding-bottom: 22px;
-      }
-
-      .post {
-        grid-template-columns: 1fr;
-        gap: 8px;
-      }
-
-      .date {
-        position: static;
-      }
-
-      .entry {
-        padding-bottom: 34px;
-      }
-
-      .photo img {
-        max-height: none;
       }
     }
   </style>
@@ -213,152 +134,34 @@
 <body>
   <main class="page">
     <header class="site-head">
-      <h1>Photo Notes</h1>
-      <div class="site-meta">RECENT PHOTOS</div>
+      <div>
+        <h1>Photo Notes</h1>
+        <div class="site-meta">OVERVIEW</div>
+      </div>
+      <a class="nav-link" href="timeline.html">TIMELINE</a>
     </header>
 
     <section class="overview" id="overview" aria-label="照片总览"></section>
-    <section class="feed" id="feed" aria-label="照片时间线"></section>
 
     <footer class="foot">Photo Notes</footer>
   </main>
 
+  <script src="data.js"></script>
   <script>
-    const entries = [
-      {
-        date: '2026.06.12',
-        location: '上海 · 武康路',
-        photos: [
-          {
-            title: '巷口的雨停了',
-            camera: 'Fujifilm X100VI',
-            src: 'https://picsum.photos/seed/photo-stream-after-rain-street/1400/1050',
-            alt: '雨后街道路面反光与行人'
-          },
-          {
-            title: '路灯下的水痕',
-            camera: 'Fujifilm X100VI',
-            src: 'https://picsum.photos/seed/photo-stream-rain-reflection-lamp/1400/1050',
-            alt: '路灯下湿润路面的反光'
-          }
-        ]
-      },
-      {
-        date: '2026.05.30',
-        location: '浙江 · 莫干山',
-        photos: [
-          {
-            title: '山腰的风',
-            camera: 'Sony A7C II',
-            src: 'https://picsum.photos/seed/photo-stream-mountain-wind/1400/1100',
-            alt: '山坡树木与低云'
-          }
-        ]
-      },
-      {
-        date: '2026.05.18',
-        location: '杭州 · 东站',
-        photos: [
-          {
-            title: '夜车窗口',
-            camera: 'Ricoh GR IIIx',
-            src: 'https://picsum.photos/seed/photo-stream-night-train-window/1400/1000',
-            alt: '夜晚列车窗口与站台灯光倒影'
-          },
-          {
-            title: '站台另一侧',
-            camera: 'Ricoh GR IIIx',
-            src: 'https://picsum.photos/seed/photo-stream-platform-other-side/1400/1000',
-            alt: '夜晚站台另一侧的灯光'
-          },
-          {
-            title: '玻璃里的候车室',
-            camera: 'Ricoh GR IIIx',
-            src: 'https://picsum.photos/seed/photo-stream-waiting-room-glass/1400/1000',
-            alt: '候车室玻璃反射'
-          }
-        ]
-      },
-      {
-        date: '2026.04.27',
-        location: '福建 · 平潭',
-        photos: [
-          {
-            title: '海边白墙',
-            camera: 'Nikon Zf',
-            src: 'https://picsum.photos/seed/photo-stream-white-wall-sea/1400/1100',
-            alt: '海边白墙与清晰阴影'
-          }
-        ]
-      },
-      {
-        date: '2026.04.03',
-        location: '上海 · 长乐路',
-        photos: [
-          {
-            title: '便利店门口',
-            camera: 'Leica Q3',
-            src: 'https://picsum.photos/seed/photo-stream-convenience-store/1400/1000',
-            alt: '夜晚便利店门口与行人'
-          }
-        ]
-      },
-      {
-        date: '2026.03.21',
-        location: '江苏 · 苏州',
-        photos: [
-          {
-            title: '湖面没有风',
-            camera: 'Canon R6 II',
-            src: 'https://picsum.photos/seed/photo-stream-still-lake/1400/1050',
-            alt: '平静湖面与远处树影'
-          }
-        ]
-      }
-    ];
-
     const overview = document.querySelector('#overview');
-    const feed = document.querySelector('#feed');
 
     function allPhotos() {
-      return entries.flatMap((entry, entryIndex) => entry.photos.map((photo, photoIndex) => ({
+      return window.photoEntries.flatMap((entry, entryIndex) => entry.photos.map((photo, photoIndex) => ({
         ...photo,
-        id: `photo-${entryIndex}-${photoIndex}`
+        url: `timeline.html#photo-${entryIndex}-${photoIndex}`
       })));
     }
 
-    function renderOverview() {
-      overview.innerHTML = allPhotos().map((photo) => `
-        <a href="#${photo.id}" aria-label="跳转到 ${photo.title}">
-          <img src="${photo.src}" alt="${photo.alt}" loading="eager">
-        </a>
-      `).join('');
-    }
-
-    function render() {
-      feed.innerHTML = entries.map((entry, entryIndex) => `
-        <article class="post">
-          <time class="date" datetime="${entry.date.replaceAll('.', '-')}">${entry.date}<br>${entry.photos.length} photos</time>
-          <div class="entry">
-            ${entry.photos.map((photo, photoIndex) => `
-              <figure class="photo" id="photo-${entryIndex}-${photoIndex}">
-                <img src="${photo.src}" alt="${photo.alt}" loading="${entryIndex < 1 ? 'eager' : 'lazy'}">
-                <figcaption>
-                  <h2>${photo.title}</h2>
-                  <div class="meta" aria-label="拍摄信息">
-                    <span>${entry.location}</span>
-                    <span>${photo.camera}</span>
-                  </div>
-                </figcaption>
-              </figure>
-            `).join('')}
-          </div>
-        </article>
-      `).join('');
-    }
-
-    renderOverview();
-    render();
+    overview.innerHTML = allPhotos().map((photo) => `
+      <a href="${photo.url}" aria-label="查看 ${photo.title}">
+        <img src="${photo.src}" alt="${photo.alt}" loading="eager">
+      </a>
+    `).join('');
   </script>
 </body>
 </html>
