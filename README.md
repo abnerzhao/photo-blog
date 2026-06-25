@@ -5,13 +5,13 @@
 ## 使用
 
 ```bash
-python3 -m http.server 4174
+python3 -m http.server 4175
 ```
 
 打开：
 
 ```text
-http://127.0.0.1:4174
+http://127.0.0.1:4175
 ```
 
 ## 修改照片
