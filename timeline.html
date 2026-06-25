@@ -115,8 +115,17 @@
       padding-bottom: 38px;
     }
 
+    .entry h2 {
+      margin: 0;
+      font-size: 18px;
+      font-weight: 680;
+      line-height: 1.28;
+      letter-spacing: 0;
+    }
+
     .entry-note {
       max-width: 620px;
+      margin-top: 8px;
       margin-bottom: 18px;
       color: var(--muted);
       font-size: 14px;
@@ -138,14 +147,6 @@
       border-radius: 4px;
       background: #e5e4df;
       object-fit: cover;
-    }
-
-    .photo h2 {
-      margin: 12px 0 0;
-      font-size: 18px;
-      font-weight: 680;
-      line-height: 1.28;
-      letter-spacing: 0;
     }
 
     .meta {
@@ -222,18 +223,16 @@
       <article class="post">
         <time class="date" datetime="${entry.date.replaceAll('.', '-')}">${entry.date}<br>${entry.photos.length} photos</time>
         <div class="entry">
+          <h2>${entry.title}</h2>
+          <div class="meta" aria-label="拍摄信息">
+            <span>${entry.location}</span>
+            <span>${entry.camera}</span>
+          </div>
           <div class="entry-note">${entry.description}</div>
           <div class="photos">
             ${entry.photos.map((photo, photoIndex) => `
               <figure class="photo" id="photo-${entryIndex}-${photoIndex}">
                 <img src="${photo.src}" alt="${photo.alt}" loading="${entryIndex < 1 ? 'eager' : 'lazy'}">
-                <figcaption>
-                  <h2>${photo.title}</h2>
-                  <div class="meta" aria-label="拍摄信息">
-                    <span>${entry.location}</span>
-                    <span>${photo.camera}</span>
-                  </div>
-                </figcaption>
               </figure>
             `).join('')}
           </div>

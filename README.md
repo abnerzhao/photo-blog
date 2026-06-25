@@ -16,7 +16,7 @@ http://127.0.0.1:4175
 
 ## 修改照片
 
-照片数据在 `data.js` 的 `photoEntries` 中。`index.html` 是全局预览页，`timeline.html` 是时间线页；每个时间点可以放多张照片，并共用一段描述。
+照片数据在 `data.js` 的 `photoEntries` 中。`index.html` 是全局预览页，支持按年份、地点、相机筛选；`timeline.html` 是时间线页，每个时间点可以放多张照片，并共用标题、描述、地点和相机信息。
 
 ## 许可
 
