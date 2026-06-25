@@ -1,4 +1,4 @@
-# Photos by Abner Zhao
+# Photo Blog
 
 A minimal static photo journal for personal photography.
 
