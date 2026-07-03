@@ -1,4 +1,4 @@
-window.photoEntries = [
+[
   {
     "title": "发现一个宝藏城市",
     "date": "2026.05.04",
@@ -95,4 +95,4 @@ window.photoEntries = [
       }
     ]
   }
-];
+]

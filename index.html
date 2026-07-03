@@ -243,7 +243,7 @@
         title: entry.title,
         year: entry.date.slice(0, 4),
         location: entry.location,
-        camera: entry.camera,
+        camera: photo.camera || entry.camera,
         url: `timeline.html#photo-${entryIndex}-${photoIndex}`
       })));
     }
