@@ -2,6 +2,8 @@
 
 A minimal static photo journal for personal photography.
 
+The visual style references [sambecker/exif-photo-blog](https://github.com/sambecker/exif-photo-blog).
+
 ## Local Preview
 
 ```bash
