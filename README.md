@@ -1,8 +1,6 @@
 # Photo Blog
 
-[中文](#中文) / [English](#english)
-
-## 中文
+[English](docs/README.en.md)
 
 一个极简的个人摄影记录网站，用静态 HTML/CSS/JS 实现。样式参考 [sambecker/exif-photo-blog](https://github.com/sambecker/exif-photo-blog)。
 
@@ -11,7 +9,7 @@
 - `index.html`：照片总览，支持按年份、地点、相机筛选
 - `timeline.html`：时间线视图，同一时间点可以包含多张照片和一段文字
 
-### 本地预览
+## 本地预览
 
 ```bash
 python3 -m http.server 4175
@@ -23,7 +21,7 @@ python3 -m http.server 4175
 http://127.0.0.1:4175
 ```
 
-### 照片数据
+## 照片数据
 
 维护 `photos.md`，然后生成页面数据：
 
@@ -58,7 +56,7 @@ Markdown 格式：
 
 如果某张照片使用了不同相机，在图片链接后追加 `| 相机名`。不写则继承该时间点的 `相机` 字段。
 
-### 项目结构
+## 项目结构
 
 ```text
 .
@@ -68,96 +66,18 @@ Markdown 格式：
 ├── data.js
 ├── data/
 │   └── photos.json
+├── docs/
+│   └── README.en.md
 ├── scripts/
 │   └── build-data.mjs
 ├── favicon.svg
 └── LICENSE
 ```
 
-### 部署
+## 部署
 
 这是纯静态项目，可以部署到 GitHub Pages、Cloudflare Pages、Vercel、Netlify 或普通 Nginx 目录。
 
-### 许可
-
-MIT
-
-## English
-
-A minimal static photo journal for personal photography. The visual style references [sambecker/exif-photo-blog](https://github.com/sambecker/exif-photo-blog).
-
-It has two views:
-
-- `index.html`: photo overview with filters by year, location, and camera
-- `timeline.html`: timeline view, where one date can contain multiple photos and one shared note
-
-### Local Preview
-
-```bash
-python3 -m http.server 4175
-```
-
-Open:
-
-```text
-http://127.0.0.1:4175
-```
-
-### Photo Data
-
-Edit `photos.md`, then generate data:
-
-```bash
-node scripts/build-data.mjs
-```
-
-The script writes:
-
-```text
-data/photos.json
-data.js
-```
-
-`data.js` is used by the current static pages. `data/photos.json` is the clean JSON data source for later API/backend migration.
-
-Markdown format:
-
-```md
-## Rain on Wukang Road
-日期：2026.06.12
-地点：Shanghai · Wukang Road
-相机：Fujifilm X100VI
-
-Ten minutes after the rain, the street still held the reflections.
-
-- https://img.example.com/photos/2026/06/rain-01.webp
-- https://img.example.com/photos/2026/06/rain-02.webp | Leica Q3
-```
-
-Each `##` block is one timeline entry. Put photos shot at the same time/place into the same block.
-
-If one photo uses a different camera from the entry, append it after `|`. Otherwise it inherits the entry-level camera.
-
-### Project Structure
-
-```text
-.
-├── index.html
-├── timeline.html
-├── photos.md
-├── data.js
-├── data/
-│   └── photos.json
-├── scripts/
-│   └── build-data.mjs
-├── favicon.svg
-└── LICENSE
-```
-
-### Deploy
-
-This project can be deployed to any static hosting service, such as GitHub Pages, Cloudflare Pages, Vercel, Netlify, or a plain Nginx directory.
-
-### License
+## 许可
 
 MIT
