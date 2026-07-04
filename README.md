@@ -78,8 +78,6 @@ Markdown 格式：
 
 这是纯静态项目，可以部署到 GitHub Pages、Cloudflare Pages、Vercel、Netlify 或普通 Nginx 目录。
 
-如果部署到自己的远程服务器，可以在服务器上手动拉取代码，并将 Nginx 站点目录指向仓库目录或同步后的静态目录。远程服务器只需要 Nginx，不需要 Node.js 运行环境。
-
 ## 许可
 
 MIT

@@ -78,8 +78,6 @@ If one photo uses a different camera from the entry, append it after `|`. Otherw
 
 This project can be deployed to any static hosting service, such as GitHub Pages, Cloudflare Pages, Vercel, Netlify, or a plain Nginx directory.
 
-When deploying to your own remote server, you can pull the repository manually and point the Nginx site root to the repository directory or a synced static directory. The remote server only needs Nginx and does not need a Node.js runtime.
-
 ## License
 
 MIT
