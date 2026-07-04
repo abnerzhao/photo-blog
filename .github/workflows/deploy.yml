@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - main
+  workflow_dispatch:
 
 jobs:
   deploy:
@@ -14,18 +15,34 @@ jobs:
         uses: actions/checkout@v5
 
       - name: Setup SSH
+        env:
+          HKVM_HOST: ${{ secrets.HKVM_HOST }}
+          HKVM_PORT: ${{ secrets.HKVM_PORT }}
+          HKVM_SSH_KEY: ${{ secrets.HKVM_SSH_KEY }}
         run: |
           mkdir -p ~/.ssh
-          echo "${{ secrets.HKVM_SSH_KEY }}" > ~/.ssh/deploy_key
+          : "${HKVM_HOST:?Missing secret HKVM_HOST}"
+          : "${HKVM_SSH_KEY:?Missing secret HKVM_SSH_KEY}"
+          HKVM_PORT="${HKVM_PORT:-22}"
+
+          printf '%s\n' "$HKVM_SSH_KEY" > ~/.ssh/deploy_key
           chmod 600 ~/.ssh/deploy_key
-          ssh-keyscan -p "${{ secrets.HKVM_PORT }}" "${{ secrets.HKVM_HOST }}" >> ~/.ssh/known_hosts
+          ssh-keyscan -T 15 -p "$HKVM_PORT" "$HKVM_HOST" >> ~/.ssh/known_hosts
 
       - name: Deploy static files
+        env:
+          HKVM_HOST: ${{ secrets.HKVM_HOST }}
+          HKVM_PORT: ${{ secrets.HKVM_PORT }}
+          HKVM_USER: ${{ secrets.HKVM_USER }}
         run: |
+          : "${HKVM_HOST:?Missing secret HKVM_HOST}"
+          : "${HKVM_USER:?Missing secret HKVM_USER}"
+          HKVM_PORT="${HKVM_PORT:-22}"
+
           rsync -az --delete \
             --exclude ".git" \
             --exclude ".github" \
             --exclude "photos.md" \
             --exclude "scripts" \
-            -e "ssh -i ~/.ssh/deploy_key -p ${{ secrets.HKVM_PORT }}" \
-            ./ ${{ secrets.HKVM_USER }}@${{ secrets.HKVM_HOST }}:/photos
+            -e "ssh -i ~/.ssh/deploy_key -p $HKVM_PORT" \
+            ./ "$HKVM_USER@$HKVM_HOST:/photos"
