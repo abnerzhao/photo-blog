@@ -76,7 +76,27 @@ Markdown 格式：
 
 ## 部署
 
-这是纯静态项目，可以部署到 GitHub Pages、Cloudflare Pages、Vercel、Netlify 或普通 Nginx 目录。
+当前部署方式是 GitHub Actions 自动同步到远程服务器：
+
+```text
+push main
+-> GitHub Actions 触发 .github/workflows/deploy.yml
+-> rsync 静态文件到远程服务器的 /photos
+-> Nginx 使用 /photos 作为站点目录对外暴露
+```
+
+这个项目是纯静态站，远程服务器只需要 Nginx，不需要 Node.js 运行环境。
+
+部署同步时会排除：
+
+```text
+.git
+.github
+photos.md
+scripts/
+```
+
+因此服务器上只保留浏览器访问需要的静态文件。
 
 ## 许可
 
