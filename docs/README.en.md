@@ -76,27 +76,9 @@ If one photo uses a different camera from the entry, append it after `|`. Otherw
 
 ## Deploy
 
-The current deployment flow uses GitHub Actions to sync static files to a remote server:
+This project can be deployed to any static hosting service, such as GitHub Pages, Cloudflare Pages, Vercel, Netlify, or a plain Nginx directory.
 
-```text
-push main
--> GitHub Actions runs .github/workflows/deploy.yml
--> rsync static files to /photos on the remote server
--> Nginx serves /photos as the site root
-```
-
-This is a fully static site. The remote server only needs Nginx and does not need a Node.js runtime.
-
-The deploy sync excludes:
-
-```text
-.git
-.github
-photos.md
-scripts/
-```
-
-Only files required by the browser are kept on the server.
+When deploying to your own remote server, you can pull the repository manually and point the Nginx site root to the repository directory or a synced static directory. The remote server only needs Nginx and does not need a Node.js runtime.
 
 ## License
 
