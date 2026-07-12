@@ -1,6 +1,17 @@
 # Photos
 
 
+## 台风来临前夕
+
+日期：2026.07.11
+地点：上海
+相机：OPPO Find X8s
+
+过了梅雨季，台风又来了
+
+- https://abnerzhao.oss-cn-shanghai.aliyuncs.com/PhotoBlog/2026//20260711_sh01.webp
+- https://abnerzhao.oss-cn-shanghai.aliyuncs.com/PhotoBlog/2026//20260711_sh02.webp
+
 
 ## 发现一个宝藏城市
 
