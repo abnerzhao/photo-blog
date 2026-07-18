@@ -9,10 +9,8 @@
 
 烈日炎炎，体验虹桥机场飞机拍摄机位
 
-- https://abnerzhao.oss-cn-shanghai.aliyuncs.com/PhotoBlog/2026//20260718-sh01.webp
 - https://abnerzhao.oss-cn-shanghai.aliyuncs.com/PhotoBlog/2026//20260718-sh02.webp
 - https://abnerzhao.oss-cn-shanghai.aliyuncs.com/PhotoBlog/2026//20260718-sh03.webp
-- https://abnerzhao.oss-cn-shanghai.aliyuncs.com/PhotoBlog/2026//20260718-sh04.webp
 - https://abnerzhao.oss-cn-shanghai.aliyuncs.com/PhotoBlog/2026//20260718-sh05.webp
 - https://abnerzhao.oss-cn-shanghai.aliyuncs.com/PhotoBlog/2026//20260718-sh06.webp
 - https://abnerzhao.oss-cn-shanghai.aliyuncs.com/PhotoBlog/2026//20260718-sh07.webp
