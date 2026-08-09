@@ -1,5 +1,22 @@
 window.photoEntries = [
   {
+    "title": "蟠龙天地",
+    "date": "2026.08.08",
+    "location": "上海",
+    "camera": "OPPO Find X8s",
+    "description": "台风来临前夕，蟠龙天地闲逛纳凉",
+    "photos": [
+      {
+        "src": "https://abnerzhao.oss-cn-shanghai.aliyuncs.com/PhotoBlog/2026//20260808-sh01.webp",
+        "alt": ""
+      },
+      {
+        "src": "https://abnerzhao.oss-cn-shanghai.aliyuncs.com/PhotoBlog/2026//20260808-sh02.webp",
+        "alt": ""
+      }
+    ]
+  },
+  {
     "title": "第一次拍飞机体验",
     "date": "2026.07.18",
     "location": "上海",
