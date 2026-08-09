@@ -1,5 +1,38 @@
 window.photoEntries = [
   {
+    "title": "第一次拍飞机体验",
+    "date": "2026.07.18",
+    "location": "上海",
+    "camera": "OPPO Find X8s",
+    "description": "烈日炎炎，体验虹桥机场飞机拍摄机位",
+    "photos": [
+      {
+        "src": "https://abnerzhao.oss-cn-shanghai.aliyuncs.com/PhotoBlog/2026//20260718-sh02.webp",
+        "alt": ""
+      },
+      {
+        "src": "https://abnerzhao.oss-cn-shanghai.aliyuncs.com/PhotoBlog/2026//20260718-sh03.webp",
+        "alt": ""
+      },
+      {
+        "src": "https://abnerzhao.oss-cn-shanghai.aliyuncs.com/PhotoBlog/2026//20260718-sh05.webp",
+        "alt": ""
+      },
+      {
+        "src": "https://abnerzhao.oss-cn-shanghai.aliyuncs.com/PhotoBlog/2026//20260718-sh06.webp",
+        "alt": ""
+      },
+      {
+        "src": "https://abnerzhao.oss-cn-shanghai.aliyuncs.com/PhotoBlog/2026//20260718-sh07.webp",
+        "alt": ""
+      },
+      {
+        "src": "https://abnerzhao.oss-cn-shanghai.aliyuncs.com/PhotoBlog/2026//20260718-sh08.webp",
+        "alt": ""
+      }
+    ]
+  },
+  {
     "title": "台风来临前夕",
     "date": "2026.07.11",
     "location": "上海",
