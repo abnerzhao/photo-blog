@@ -1,6 +1,18 @@
 # Photos
 
 
+## 蟠龙天地
+
+日期：2026.08.08
+地点：上海
+相机：OPPO Find X8s
+
+台风来临前夕，蟠龙天地闲逛纳凉
+
+- https://abnerzhao.oss-cn-shanghai.aliyuncs.com/PhotoBlog/2026//20260808-sh01.webp
+- https://abnerzhao.oss-cn-shanghai.aliyuncs.com/PhotoBlog/2026//20260808-sh02.webp
+
+
 ## 第一次拍飞机体验
 
 日期：2026.07.18
