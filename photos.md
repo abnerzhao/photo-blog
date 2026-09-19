@@ -1,5 +1,27 @@
 # Photos
 
+## 长风海洋世界
+
+日期：2026.09.19
+地点：上海
+相机：DJI Pocket 3
+
+解锁长风海洋世界，Mini 版本海底世界
+
+- https://abnerzhao.oss-cn-shanghai.aliyuncs.com/PhotoBlog/2026//20260919-sh01.webp
+
+
+## 上海乐高乐园
+
+日期：2026.09.12
+地点：上海
+相机：iPhone 15
+
+低幼儿童勇闯乐高乐园
+
+- https://abnerzhao.oss-cn-shanghai.aliyuncs.com/PhotoBlog/2026//20260912-sh01.webp
+- https://abnerzhao.oss-cn-shanghai.aliyuncs.com/PhotoBlog/2026//20260912-sh02.webp
+
 
 ## 蟠龙天地
 
