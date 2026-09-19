@@ -1,5 +1,35 @@
 [
   {
+    "title": "长风海洋世界",
+    "date": "2026.09.19",
+    "location": "上海",
+    "camera": "DJI Pocket 3",
+    "description": "解锁长风海洋世界，Mini 版本海底世界",
+    "photos": [
+      {
+        "src": "https://abnerzhao.oss-cn-shanghai.aliyuncs.com/PhotoBlog/2026//20260919-sh01.webp",
+        "alt": ""
+      }
+    ]
+  },
+  {
+    "title": "上海乐高乐园",
+    "date": "2026.09.12",
+    "location": "上海",
+    "camera": "iPhone 15",
+    "description": "低幼儿童勇闯乐高乐园",
+    "photos": [
+      {
+        "src": "https://abnerzhao.oss-cn-shanghai.aliyuncs.com/PhotoBlog/2026//20260912-sh01.webp",
+        "alt": ""
+      },
+      {
+        "src": "https://abnerzhao.oss-cn-shanghai.aliyuncs.com/PhotoBlog/2026//20260912-sh02.webp",
+        "alt": ""
+      }
+    ]
+  },
+  {
     "title": "蟠龙天地",
     "date": "2026.08.08",
     "location": "上海",
@@ -17,7 +47,6 @@
     ]
   },
   {
->>>>>>> 91aa13a737eeb7ed2863ae49d7ad56104f62aa03
     "title": "第一次拍飞机体验",
     "date": "2026.07.18",
     "location": "上海",
