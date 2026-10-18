@@ -1,6 +1,27 @@
 [
   {
     "title": "长风海洋世界",
+    "date": "2026.10.09",
+    "location": "江苏 · 宜兴",
+    "camera": "DJI Pocket 3",
+    "description": "宜兴窑湖小镇，乌镇团队打造，遛娃好去处",
+    "photos": [
+      {
+        "src": "https://abnerzhao.oss-cn-shanghai.aliyuncs.com/PhotoBlog/2026//20261009-yx01.webp",
+        "alt": ""
+      },
+      {
+        "src": "https://abnerzhao.oss-cn-shanghai.aliyuncs.com/PhotoBlog/2026//20261009-yx02.webp",
+        "alt": ""
+      },
+      {
+        "src": "https://abnerzhao.oss-cn-shanghai.aliyuncs.com/PhotoBlog/2026//20261009-yx03.webp",
+        "alt": ""
+      }
+    ]
+  },
+  {
+    "title": "长风海洋世界",
     "date": "2026.09.19",
     "location": "上海",
     "camera": "DJI Pocket 3",
