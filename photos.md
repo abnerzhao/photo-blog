@@ -2,6 +2,19 @@
 
 ## 长风海洋世界
 
+日期：2026.10.09
+地点：江苏 · 宜兴
+相机：DJI Pocket 3
+
+宜兴窑湖小镇，乌镇团队打造，遛娃好去处
+
+- https://abnerzhao.oss-cn-shanghai.aliyuncs.com/PhotoBlog/2026//20261009-yx01.webp
+- https://abnerzhao.oss-cn-shanghai.aliyuncs.com/PhotoBlog/2026//20261009-yx02.webp
+- https://abnerzhao.oss-cn-shanghai.aliyuncs.com/PhotoBlog/2026//20261009-yx03.webp
+
+
+## 长风海洋世界
+
 日期：2026.09.19
 地点：上海
 相机：DJI Pocket 3
